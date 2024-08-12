@@ -1,0 +1,72 @@
+<form class="form-block">
+  <div class="switch">
+    <mat-button-toggle-group
+      [(ngModel)]="conversionType"
+      [ngModelOptions]="{ standalone: true }"
+      (ngModelChange)="updateConversionType($event)"
+    >
+      <mat-button-toggle value="buy"> BUY </mat-button-toggle>
+      <mat-button-toggle value="sell"> SELL </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+  <div class="wrapper">
+    <div class="currency-block">
+      <mat-form-field appearance="fill">
+        <mat-label>Select a currency</mat-label>
+        <mat-select
+          class="custom-select"
+          [(ngModel)]="firstSelect"
+          [ngModelOptions]="{ standalone: true }"
+          (ngModelChange)="updateFirstSelect($event)"
+        >
+          <mat-option
+            *ngFor="let currency of currenciesValues"
+            [value]="currency.value"
+          >
+            {{ currency.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="custom-form-field" appearance="fill">
+        <mat-label>From</mat-label>
+        <input
+          matInput
+          [placeholder]="placeholder"
+          [(ngModel)]="firstInput"
+          [ngModelOptions]="{ standalone: true }"
+          (ngModelChange)="updateFirstValue($event)"
+        />
+      </mat-form-field>
+    </div>
+    <div class="currency-block">
+      <mat-form-field appearance="fill">
+        <mat-label>Select a currency</mat-label>
+        <mat-select
+          class="custom-select"
+          [(ngModel)]="secondSelect"
+          [ngModelOptions]="{ standalone: true }"
+          (ngModelChange)="updateSecondSelect($event)"
+        >
+          <mat-option
+            *ngFor="let currency of currenciesValues"
+            [value]="currency.value"
+          >
+            {{ currency.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="custom-form-field" appearance="fill">
+        <mat-label>To</mat-label>
+        <input
+          [placeholder]="placeholder"
+          matInput
+          [(ngModel)]="secondInput"
+          [ngModelOptions]="{ standalone: true }"
+          (ngModelChange)="updateSecondValue($event)"
+        />
+      </mat-form-field>
+    </div>
+  </div>
+</form>

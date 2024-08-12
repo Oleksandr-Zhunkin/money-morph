@@ -1,0 +1,25 @@
+.form-block {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  width: 50%;
+  margin: 0 auto;
+  background-color: #d8caca;
+  padding: 25px;
+  border-radius: 15px;
+}
+
+.switch {
+  margin: 0 auto;
+}
+
+.wrapper {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+}
+.currency-block {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}

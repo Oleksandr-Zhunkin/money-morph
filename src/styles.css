@@ -1,1 +1,45 @@
-/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  min-height: 100vh;
+}
+body {
+  margin: 0;
+  background: linear-gradient(
+      to bottom right,
+      rgba(53, 51, 51, 0.9),
+      rgba(66, 59, 107, 0.5),
+      rgba(10, 183, 218, 0.7)
+    ),
+    url("./images/dollars.png") center center;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.mat-typography p {
+  margin: 0;
+}
+
+.mat-mdc-text-field-wrapper {
+  border-radius: 15px !important;
+}
+
+div.mat-mdc-select-panel {
+  border-radius: 15px !important;
+  margin-top: 5px;
+  padding: 0 !important;
+}

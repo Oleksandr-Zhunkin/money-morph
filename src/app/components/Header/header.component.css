@@ -1,0 +1,23 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #3f4948;
+  color: #bec9c8;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.header-list {
+  display: flex;
+  gap: 15px;
+}
+
+.item {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  border: 1px solid #00dddd;
+  padding: 8px;
+  border-radius: 15px;
+}
