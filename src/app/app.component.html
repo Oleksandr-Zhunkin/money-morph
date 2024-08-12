@@ -1,4 +1,6 @@
-<app-header></app-header>
-<app-main></app-main>
-
-<router-outlet />
+@if(currencies) {
+<app-header [headerCurrencies]="headerCurrencies"></app-header>
+<app-main [currencies]="currencies"></app-main>
+} @else {
+<p>Loading...</p>
+}

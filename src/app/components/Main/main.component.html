@@ -32,8 +32,9 @@
         <mat-label>From</mat-label>
         <input
           matInput
+          type="number"
           [placeholder]="placeholder"
-          [(ngModel)]="firstInput"
+          [(ngModel)]="fromValue"
           [ngModelOptions]="{ standalone: true }"
           (ngModelChange)="updateFirstValue($event)"
         />
@@ -61,8 +62,9 @@
         <mat-label>To</mat-label>
         <input
           [placeholder]="placeholder"
+          type="number"
           matInput
-          [(ngModel)]="secondInput"
+          [(ngModel)]="toValue"
           [ngModelOptions]="{ standalone: true }"
           (ngModelChange)="updateSecondValue($event)"
         />

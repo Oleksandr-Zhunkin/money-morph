@@ -1,3 +1,5 @@
+import { Rate } from '../services/currency.service';
+
 const findRate = (
   codeA: number,
   codeB: number,
@@ -25,14 +27,17 @@ const findRate = (
 };
 
 export const convertCurrency = (
-  firstValue: string,
+  firstValue: number | null,
   firstSelect: string,
-  secondValue: string,
+  secondValue: number | null,
   secondSelect: string,
   conversionType: string,
   changedField?: 'first' | 'second',
   currencies?: Rate[]
-): { newFirstValue: string; newSecondValue: string } | void => {
+): { newFirstValue: number | null; newSecondValue: number | null } | void => {
+  if (firstValue === null && secondValue === null) {
+    return;
+  }
   if (firstSelect === secondSelect) {
     return { newFirstValue: firstValue, newSecondValue: firstValue };
   }
@@ -40,6 +45,7 @@ export const convertCurrency = (
   if (!currencies) {
     return console.error('Currencies not found');
   }
+
   let rate = findRate(
     Number(firstSelect),
     Number(secondSelect),
@@ -67,19 +73,10 @@ export const convertCurrency = (
   let newSecondValue = secondValue;
 
   if (changedField === 'first') {
-    newSecondValue = (Number(firstValue) * rate).toFixed(2);
+    newSecondValue = Number((Number(firstValue) * rate).toFixed(2));
   } else if (changedField === 'second') {
-    newFirstValue = (Number(secondValue) / rate).toFixed(2);
+    newFirstValue = Number((Number(secondValue) / rate).toFixed(2));
   }
 
   return { newFirstValue, newSecondValue };
 };
-
-export interface Rate {
-  currencyCodeA: number;
-  currencyCodeB: number;
-  date: number;
-  rateBuy?: number;
-  rateSell?: number;
-  rateCross?: number;
-}

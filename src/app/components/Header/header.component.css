@@ -7,10 +7,13 @@
   padding: 15px;
   margin-bottom: 20px;
 }
+.logo {
+  width: 70px;
+}
 
 .header-list {
   display: flex;
-  gap: 15px;
+  gap: 5px;
 }
 
 .item {

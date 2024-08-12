@@ -1,21 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterOutlet } from '@angular/router';
-import { convertCurrency, Rate } from '../../utils/utils';
-import { CurrencyService } from '../../services/currency.service';
-import { MaterialModule } from '../../material/material.module';
+import { convertCurrency } from '../../utils/utils';
+import { Rate } from '../../services/currency.service';
 import { CommonModule } from '@angular/common';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-main',
   standalone: true,
   imports: [
     FormsModule,
-    RouterOutlet,
     CommonModule,
-    MaterialModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
     MatButtonToggleModule,
     MatOptionModule,
   ],
@@ -23,33 +27,26 @@ import { MatOptionModule } from '@angular/material/core';
   styleUrl: './main.component.css',
 })
 export class MainComponent {
-  placeholder: string = '0.00';
-  firstInput: string = '';
-  firstSelect: string = '840';
-  secondInput: string = '';
-  secondSelect: string = '980';
+  placeholder = '0.00';
+  fromValue: number | null = null;
+  firstSelect = '840';
+  toValue: number | null = null;
+  secondSelect = '980';
   conversionType: 'buy' | 'sell' = 'buy';
-  currencies: Rate[] = [];
+  @Input() currencies: Rate[] = [];
   currenciesValues = [
     { value: '840', viewValue: 'USD' },
     { value: '978', viewValue: 'EUR' },
     { value: '980', viewValue: 'UAH' },
   ];
 
-  constructor(private currencyService: CurrencyService) {}
-
-  async ngOnInit() {
-    const result = await this.currencyService.load();
-    this.currencies = result.result;
-  }
-
   private updateValues(changedField: 'first' | 'second') {
-    if (this.firstInput === '' && this.secondInput === '') return;
+    if (this.fromValue === null && this.toValue === null) return;
     try {
       const result = convertCurrency(
-        this.firstInput,
+        this.fromValue,
         this.firstSelect,
-        this.secondInput,
+        this.toValue,
         this.secondSelect,
         this.conversionType,
         changedField,
@@ -58,25 +55,25 @@ export class MainComponent {
 
       if (result) {
         if (changedField === 'first') {
-          this.secondInput = result.newSecondValue.toString();
+          this.toValue = result.newSecondValue;
         } else {
-          this.firstInput = result.newFirstValue.toString();
+          this.fromValue = result.newFirstValue;
         }
       } else {
         console.warn('Conversion result is undefined.');
       }
     } catch (error) {
-      console.error('Error during currency conversion:');
+      console.error('Error during currency conversion');
     }
   }
 
-  updateFirstValue(newFirstValue: string) {
-    this.firstInput = newFirstValue;
+  updateFirstValue(newFirstValue: number | null) {
+    this.fromValue = newFirstValue;
     this.updateValues('first');
   }
 
-  updateSecondValue(newSecondValue: string) {
-    this.secondInput = newSecondValue;
+  updateSecondValue(newSecondValue: number | null) {
+    this.toValue = newSecondValue;
     this.updateValues('second');
   }
 

@@ -23,16 +23,25 @@ export class CurrencyService {
     if (cashedCurrencyData !== null) {
       const parsedData = JSON.parse(cashedCurrencyData);
       if (parsedData.date && date - parsedData.date < 3600000) {
-        return parsedData;
+        return parsedData.result as Rate[];
       }
     }
     const currencyData = {
       date,
-      result: await firstValueFrom(this.http.get(this.url)),
+      result: await firstValueFrom(this.http.get<Rate[]>(this.url)),
     };
 
     localStorage.setItem(currencyKey, JSON.stringify(currencyData));
 
-    return currencyData;
+    return currencyData.result;
   }
+}
+
+export interface Rate {
+  currencyCodeA: number;
+  currencyCodeB: number;
+  date: number;
+  rateBuy?: number;
+  rateSell?: number;
+  rateCross?: number;
 }
