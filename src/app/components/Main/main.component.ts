@@ -1,28 +1,16 @@
 import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { convertCurrency } from '../../utils/utils';
-import { Rate } from '../../services/currency.service';
 import { CommonModule } from '@angular/common';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatOptionModule } from '@angular/material/core';
-import { MatSelectModule } from '@angular/material/select';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
+import { CustomInput } from '../customInput/customInput.component';
+import { CustomSelect } from '../customSelect/customSelect.component';
+import { CustomToggle } from '../customToggle/customToggle.component';
+import { Rate } from '../../types/types';
 
 @Component({
   selector: 'app-main',
   standalone: true,
-  imports: [
-    FormsModule,
-    CommonModule,
-    MatSelectModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatOptionModule,
-  ],
+  imports: [FormsModule, CommonModule, CustomInput, CustomSelect, CustomToggle],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css',
 })
@@ -34,6 +22,7 @@ export class MainComponent {
   secondSelect = '980';
   conversionType: 'buy' | 'sell' = 'buy';
   @Input() currencies: Rate[] = [];
+
   currenciesValues = [
     { value: '840', viewValue: 'USD' },
     { value: '978', viewValue: 'EUR' },

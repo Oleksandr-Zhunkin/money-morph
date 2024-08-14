@@ -1,4 +1,4 @@
-import { Rate } from '../services/currency.service';
+import { Rate } from '../types/types';
 
 const findRate = (
   codeA: number,
@@ -39,7 +39,7 @@ export const convertCurrency = (
     return;
   }
   if (firstSelect === secondSelect) {
-    return { newFirstValue: firstValue, newSecondValue: firstValue };
+    return { newFirstValue: secondValue, newSecondValue: firstValue };
   }
 
   if (!currencies) {

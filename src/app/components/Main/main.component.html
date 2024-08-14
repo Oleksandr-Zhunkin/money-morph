@@ -1,74 +1,47 @@
 <form class="form-block">
   <div class="switch">
-    <mat-button-toggle-group
+    <app-custom-toggle
+      [options]="[
+        { value: 'buy', label: 'BUY' },
+        { value: 'sell', label: 'SELL' }
+      ]"
       [(ngModel)]="conversionType"
-      [ngModelOptions]="{ standalone: true }"
+      name="conversionType"
       (ngModelChange)="updateConversionType($event)"
-    >
-      <mat-button-toggle value="buy"> BUY </mat-button-toggle>
-      <mat-button-toggle value="sell"> SELL </mat-button-toggle>
-    </mat-button-toggle-group>
+    ></app-custom-toggle>
   </div>
   <div class="wrapper">
     <div class="currency-block">
-      <mat-form-field appearance="fill">
-        <mat-label>Select a currency</mat-label>
-        <mat-select
-          class="custom-select"
-          [(ngModel)]="firstSelect"
-          [ngModelOptions]="{ standalone: true }"
-          (ngModelChange)="updateFirstSelect($event)"
-        >
-          <mat-option
-            *ngFor="let currency of currenciesValues"
-            [value]="currency.value"
-          >
-            {{ currency.viewValue }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+      <app-custom-select
+        [currencies]="currenciesValues"
+        [(ngModel)]="firstSelect"
+        [ngModelOptions]="{ standalone: true }"
+        (ngModelChange)="updateFirstSelect($event)"
+      ></app-custom-select>
 
-      <mat-form-field class="custom-form-field" appearance="fill">
-        <mat-label>From</mat-label>
-        <input
-          matInput
-          type="number"
-          [placeholder]="placeholder"
-          [(ngModel)]="fromValue"
-          [ngModelOptions]="{ standalone: true }"
-          (ngModelChange)="updateFirstValue($event)"
-        />
-      </mat-form-field>
+      <app-custom-input
+        label="From"
+        [(ngModel)]="fromValue"
+        [placeholder]="placeholder"
+        [ngModelOptions]="{ standalone: true }"
+        (ngModelChange)="updateFirstValue($event)"
+      ></app-custom-input>
     </div>
     <div class="currency-block">
-      <mat-form-field appearance="fill">
-        <mat-label>Select a currency</mat-label>
-        <mat-select
-          class="custom-select"
-          [(ngModel)]="secondSelect"
-          [ngModelOptions]="{ standalone: true }"
-          (ngModelChange)="updateSecondSelect($event)"
-        >
-          <mat-option
-            *ngFor="let currency of currenciesValues"
-            [value]="currency.value"
-          >
-            {{ currency.viewValue }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+      <app-custom-select
+        [currencies]="currenciesValues"
+        [(ngModel)]="secondSelect"
+        [ngModelOptions]="{ standalone: true }"
+        (ngModelChange)="updateSecondSelect($event)"
+      ></app-custom-select>
 
-      <mat-form-field class="custom-form-field" appearance="fill">
-        <mat-label>To</mat-label>
-        <input
-          [placeholder]="placeholder"
-          type="number"
-          matInput
-          [(ngModel)]="toValue"
-          [ngModelOptions]="{ standalone: true }"
-          (ngModelChange)="updateSecondValue($event)"
-        />
-      </mat-form-field>
+      <app-custom-input
+        label="To"
+        [(ngModel)]="toValue"
+        [placeholder]="placeholder"
+        [ngModelOptions]="{ standalone: true }"
+        (ngModelChange)="updateSecondValue($event)"
+      ></app-custom-input>
     </div>
   </div>
 </form>

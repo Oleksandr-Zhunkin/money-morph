@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
+import { Rate } from '../types/types';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +27,7 @@ export class CurrencyService {
         return parsedData.result as Rate[];
       }
     }
+
     const currencyData = {
       date,
       result: await firstValueFrom(this.http.get<Rate[]>(this.url)),
@@ -35,13 +37,4 @@ export class CurrencyService {
 
     return currencyData.result;
   }
-}
-
-export interface Rate {
-  currencyCodeA: number;
-  currencyCodeB: number;
-  date: number;
-  rateBuy?: number;
-  rateSell?: number;
-  rateCross?: number;
 }

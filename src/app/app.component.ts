@@ -1,5 +1,6 @@
-import { CurrencyService, Rate } from './services/currency.service';
+import { CurrencyService } from './services/currency.service';
 import { Component } from '@angular/core';
+import { Rate } from './types/types';
 import { HeaderComponent } from './components/header/header.component';
 import { MainComponent } from './components/main/main.component';
 
