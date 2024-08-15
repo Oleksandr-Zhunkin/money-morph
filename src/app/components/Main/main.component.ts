@@ -29,7 +29,7 @@ export class MainComponent {
     { value: '980', viewValue: 'UAH' },
   ];
 
-  private updateValues(changedField: 'first' | 'second') {
+  private updateValues(changedField: 'from' | 'to') {
     if (this.fromValue === null && this.toValue === null) return;
     try {
       const result = convertCurrency(
@@ -43,7 +43,7 @@ export class MainComponent {
       );
 
       if (result) {
-        if (changedField === 'first') {
+        if (changedField === 'from') {
           this.toValue = result.newSecondValue;
         } else {
           this.fromValue = result.newFirstValue;
@@ -58,26 +58,26 @@ export class MainComponent {
 
   updateFirstValue(newFirstValue: number | null) {
     this.fromValue = newFirstValue;
-    this.updateValues('first');
+    this.updateValues('from');
   }
 
   updateSecondValue(newSecondValue: number | null) {
     this.toValue = newSecondValue;
-    this.updateValues('second');
+    this.updateValues('to');
   }
 
   updateFirstSelect(newFirstSelect: string) {
     this.firstSelect = newFirstSelect;
-    this.updateValues('first');
+    this.updateValues('from');
   }
 
   updateSecondSelect(newSecondSelect: string) {
     this.secondSelect = newSecondSelect;
-    this.updateValues('first');
+    this.updateValues('from');
   }
 
   updateConversionType(newConversionType: 'buy' | 'sell') {
     this.conversionType = newConversionType;
-    this.updateValues('first');
+    this.updateValues('from');
   }
 }

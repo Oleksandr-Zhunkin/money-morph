@@ -1,5 +1,9 @@
 import { Rate } from '../types/types';
 
+const USD_CODE = 840;
+const EUR_CODE = 978;
+const UAH_CODE = 980;
+
 const findRate = (
   codeA: number,
   codeB: number,
@@ -10,10 +14,8 @@ const findRate = (
 
   const rateEntry = rates.find(
     (rate) =>
-      (rate.currencyCodeA === Number(codeA) &&
-        rate.currencyCodeB === Number(codeB)) ||
-      (rate.currencyCodeA === Number(codeB) &&
-        rate.currencyCodeB === Number(codeA))
+      (rate.currencyCodeA === codeA && rate.currencyCodeB === codeB) ||
+      (rate.currencyCodeA === codeB && rate.currencyCodeB === codeA)
   );
 
   if (!rateEntry) return null;
@@ -27,37 +29,33 @@ const findRate = (
 };
 
 export const convertCurrency = (
-  firstValue: number | null,
-  firstSelect: string,
-  secondValue: number | null,
-  secondSelect: string,
+  fromValue: number | null,
+  codeCurrencyFrom: string,
+  toValue: number | null,
+  codeCurrencyTo: string,
   conversionType: string,
-  changedField?: 'first' | 'second',
-  currencies?: Rate[]
+  changedField?: 'from' | 'to',
+  currencies: Rate[] = []
 ): { newFirstValue: number | null; newSecondValue: number | null } | void => {
-  if (firstValue === null && secondValue === null) {
+  if (fromValue === null && toValue === null) {
     return;
   }
-  if (firstSelect === secondSelect) {
-    return { newFirstValue: secondValue, newSecondValue: firstValue };
-  }
-
-  if (!currencies) {
-    return console.error('Currencies not found');
+  if (codeCurrencyFrom === codeCurrencyTo) {
+    return { newFirstValue: toValue, newSecondValue: fromValue };
   }
 
   let rate = findRate(
-    Number(firstSelect),
-    Number(secondSelect),
+    Number(codeCurrencyFrom),
+    Number(codeCurrencyTo),
     conversionType,
     currencies
   );
 
   if (
-    (Number(firstSelect) === 840 &&
-      Number(secondSelect) === 978 &&
+    (Number(codeCurrencyFrom) === USD_CODE &&
+      Number(codeCurrencyTo) === EUR_CODE &&
       rate !== null) ||
-    (Number(firstSelect) === 980 && rate !== null)
+    (Number(codeCurrencyFrom) === UAH_CODE && rate !== null)
   ) {
     rate = 1 / rate;
   } else {
@@ -69,13 +67,13 @@ export const convertCurrency = (
     return;
   }
 
-  let newFirstValue = firstValue;
-  let newSecondValue = secondValue;
+  let newFirstValue = fromValue;
+  let newSecondValue = toValue;
 
-  if (changedField === 'first') {
-    newSecondValue = Number((Number(firstValue) * rate).toFixed(2));
-  } else if (changedField === 'second') {
-    newFirstValue = Number((Number(secondValue) / rate).toFixed(2));
+  if (changedField === 'from') {
+    newSecondValue = Number((Number(fromValue) * rate).toFixed(2));
+  } else if (changedField === 'to') {
+    newFirstValue = Number((Number(toValue) / rate).toFixed(2));
   }
 
   return { newFirstValue, newSecondValue };
