@@ -3,11 +3,12 @@ import { Component } from '@angular/core';
 import { Rate } from './types/types';
 import { HeaderComponent } from './components/Header/header.component';
 import { MainComponent } from './components/Main/main.component';
+import {FooterComponent} from "./components/footer/footer.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [HeaderComponent, MainComponent],
+  imports: [HeaderComponent, MainComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
