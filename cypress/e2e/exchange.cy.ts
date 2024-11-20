@@ -11,7 +11,7 @@ describe('Exchange value from one currency to another', () => {
 
     // Select the second currency
     cy.get('mat-select[id="mat-select-2"]').click();
-    cy.get('mat-option').contains('USD').click();
+    cy.get('mat-option').contains('UAH').click();
 
     // Close the second select dropdown
     cy.get('body').click(0, 0);
@@ -28,13 +28,24 @@ describe('Exchange value from one currency to another', () => {
           });
         } else {
           // Perform actions if the values are different(usd to uah)
-          cy.get('ul[class="header-list"] :nth-child(1) :nth-child(2)').should('contain', '41.15');
-          cy.get('input[id="mat-input-0"]').type('100').invoke('val').then((value) => {
-            const numericValue = Number(value);
-            if (!isNaN(numericValue)) {
-              cy.get('input[id="mat-input-1"]').should('have.value', numericValue * 41.15);
+          // cy.get('ul[class="header-list"] :nth-child(1) :nth-child(2)').should('contain', '41.15');
+          cy.get('ul.header-list li').each(($el) => {
+            const firstChildText = $el.find('p:first-child').text().trim();
+            const secondChildText = $el.find('p:last-child').text().trim();
+
+            if (firstChildText.includes('USD') && secondChildText.includes('UAH')) {
+              const courseValue = parseFloat(secondChildText.replace('UAH', '').trim());
+              cy.wrap(courseValue).should('be.a', 'number');
+
+              cy.get('input[id="mat-input-0"]').type('100').invoke('val').then((value) => {
+                const numericValue = Number(value);
+                if (!isNaN(numericValue)) {
+                  cy.get('input[id="mat-input-1"]').should('have.value', numericValue * courseValue);
+                }
+              });
             }
           });
+
 
         }
       });
