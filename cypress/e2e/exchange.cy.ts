@@ -11,7 +11,7 @@ describe('Exchange value from one currency to another', () => {
 
     // Select the second currency
     cy.get('mat-select[id="mat-select-2"]').click();
-    cy.get('mat-option').contains('UAH').click();
+    cy.get('mat-option').contains('USD').click();
 
     // Close the second select dropdown
     cy.get('body').click(0, 0);
@@ -28,7 +28,6 @@ describe('Exchange value from one currency to another', () => {
           });
         } else {
           // Perform actions if the values are different(usd to uah)
-          // cy.get('ul[class="header-list"] :nth-child(1) :nth-child(2)').should('contain', '41.15');
           cy.get('ul.header-list li').each(($el) => {
             const firstChildText = $el.find('p:first-child').text().trim();
             const secondChildText = $el.find('p:last-child').text().trim();
@@ -45,8 +44,6 @@ describe('Exchange value from one currency to another', () => {
               });
             }
           });
-
-
         }
       });
     });
